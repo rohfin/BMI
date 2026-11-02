@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BMI Calculator app icon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#004a77"/>
+      <stop offset="100%" stop-color="#2fa36b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="92" fill="url(#bg)"/>
+  <circle cx="154" cy="178" r="78" fill="#ffffff" opacity="0.12"/>
+  <rect x="104" y="130" width="304" height="250" rx="28" fill="#ffffff" opacity="0.14"/>
+  <path d="M140 330 L198 190 L250 270 L310 150 L372 330" fill="none" stroke="#ffffff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="160" y="350" width="192" height="20" rx="10" fill="#ffffff" opacity="0.85"/>
+  <text x="256" y="272" text-anchor="middle" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">BMI</text>
+</svg>

@@ -3,7 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#004a77">
+<meta name="description" content="BMI Calculator for the Asian-Pacific cut-offs used in Malaysia.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>BMI Calculator (Malaysia)</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<link rel="apple-touch-icon" href="./icon.svg">
 <style>
 :root{--bg:#eef6f9;--card:#fff;--tx:#0f2a3d;--mute:#5b7384;--line:#d5e5ec;--accent:#004a77;
 --c0:#3b8fd4;--c1:#2fa36b;--c2:#e8a317;--c3:#e8742a;--c4:#d9453d;--c5:#9c2a3a;
@@ -21,7 +28,7 @@ h1{font-size:1.2rem;margin:0 0 2px}
 .row label{font-weight:600}
 .val{font-size:1.5rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
 .val small{font-size:.8rem;color:var(--mute);font-weight:500}
-.num{width:5.2ch;font:inherit;font-size:1.5rem;font-weight:700;color:var(--accent);background:transparent;border:0;border-bottom:2px dashed var(--line);border-radius:0;text-align:right;padding:0 2px;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.num{width:5.2ch;font:inherit;font-size:1.5rem;font-weight:700;color:var(--accent);background:transparent;border:0;border-bottom:2px dashed var(--line);border-radius:0;text-align:right;padding:0 2px}
 .num::-webkit-outer-spin-button,.num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .num:focus{outline:0;border-bottom:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
 input[type=range]{width:100%;height:36px;margin:6px 0 0;accent-color:var(--accent)}
@@ -41,10 +48,13 @@ input[type=range]{width:100%;height:36px;margin:6px 0 0;accent-color:var(--accen
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
 .tbl tr.on{font-weight:700;background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .note{color:var(--mute);font-size:.75rem;text-align:center}
+.install-btn{display:inline-flex;align-items:center;justify-content:center;width:100%;margin:0 0 16px;padding:12px 16px;border:0;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;font-size:0.95rem;box-shadow:0 10px 18px rgba(0,74,119,.18);cursor:pointer}
+.install-btn[hidden]{display:none}
 </style>
 </head>
 <body>
 <main>
+<button id="installButton" class="install-btn" type="button" hidden>Install app</button>
 <h1>BMI Calculator</h1>
 <p class="sub">Asian-Pacific cut-offs for Malaysian adults (&gt;18 years)</p>
 
@@ -115,7 +125,32 @@ $("w").addEventListener("input",upd);$("h").addEventListener("input",upd);
   n.addEventListener("blur",commit);
   n.addEventListener("keydown",function(e){if(e.key==="Enter")n.blur()});
 });
+
+let installPrompt = null;
+const installButton = $("installButton");
+window.addEventListener("beforeinstallprompt", function(event) {
+  event.preventDefault();
+  installPrompt = event;
+  installButton.hidden = false;
+});
+installButton.addEventListener("click", async function() {
+  if (!installPrompt) return;
+  installPrompt.prompt();
+  await installPrompt.userChoice;
+  installPrompt = null;
+  installButton.hidden = true;
+});
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("./sw.js").catch(function(error) {
+      console.error("Service worker registration failed:", error);
+    });
+  });
+}
+
 upd();
 </script>
 </body>
 </html>
+

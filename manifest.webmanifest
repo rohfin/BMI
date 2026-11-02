@@ -1,0 +1,25 @@
+{
+  "name": "BMI Calculator",
+  "short_name": "BMI",
+  "description": "BMI Calculator for the Asian-Pacific cut-offs used in Malaysia.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef6f9",
+  "theme_color": "#004a77",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./maskable-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
